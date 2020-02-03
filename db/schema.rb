@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_02_03_172053) do
     t.string "content"
     t.integer "heat_lvl"
     t.integer "user_id"
+    t.integer "spot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_02_03_172053) do
     t.string "location"
     t.string "description"
     t.string "features"
-    t.string "type"
+    t.string "spot_type"
     t.string "img"
     t.integer "avg_rating"
     t.datetime "created_at", null: false

@@ -1,51 +1,44 @@
 class ReviewsController < ApplicationController
-  before_action :set_review, only: [:show, :update, :destroy]
 
-  # GET /reviews
   def index
-    @reviews = Review.all
-
-    render json: @reviews
-  end
-
-  # GET /reviews/1
-  def show
-    render json: @review
-  end
-
-  # POST /reviews
-  def create
-    @review = Review.new(review_params)
-
-    if @review.save
-      render json: @review, status: :created, location: @review
-    else
-      render json: @review.errors, status: :unprocessable_entity
+      @reviews = Review.all
+      json_response(@reviews)
     end
-  end
 
-  # PATCH/PUT /reviews/1
-  def update
-    if @review.update(review_params)
-      render json: @review
-    else
-      render json: @review.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /reviews/1
-  def destroy
-    @review.destroy
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_review
+    def show
       @review = Review.find(params[:id])
+      json_response(@review)
     end
 
-    # Only allow a trusted parameter "white list" through.
-    def review_params
-      params.fetch(:review, {})
+    def create
+      @review = Review.create!(review_params)
+      json_response(@review, :created)
     end
-end
+
+    def update
+      @review = Review.find(params[:id])
+      if @review.update!(review_params)
+      render status: 200, json: {
+       message: "This review has been updated successfully."
+       }
+    end
+  end
+
+    def destroy
+      @review = Review.find(params[:id])
+      if @review.destroy!
+        render status: 200, json: {
+          message: 'This review has been destoryed.'
+        }
+    end
+  end
+
+    private
+    def json_response(object, status = :ok)
+      render json: object, status: status
+    end
+
+    def review_params
+      params.permit(:rating, :species, :breed, :sex, :age, :status, :shelter_id)
+    end
+  end

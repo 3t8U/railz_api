@@ -5,7 +5,7 @@ class CreateSpots < ActiveRecord::Migration[5.2]
       t.string :location
       t.string :description
       t.string :features
-      t.string :type
+      t.string :spot_type
       t.string :img
       t.integer :avg_rating
       t.timestamps

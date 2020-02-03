@@ -6,6 +6,7 @@ class CreateReviews < ActiveRecord::Migration[5.2]
       t.string :content
       t.integer :heat_lvl
       t.integer :user_id
+      t.integer :spot_id
       t.timestamps
     end
   end

@@ -1,51 +1,55 @@
 class SpotsController < ApplicationController
-  before_action :set_spot, only: [:show, :update, :destroy]
 
-  # GET /spots
   def index
     @spots = Spot.all
-
-    render json: @spots
+    json_response(@spots)
   end
 
-  # GET /spots/1
   def show
-    render json: @spot
+    if params[:search]
+      @spot = @spot.search(params[:search])
+    else
+      @spot = Spot.find(params[:id])
+    end
+      json_response(@spot)
   end
 
-  # POST /spots
+  def search
+    if params[:search]
+      @spots = @spots.search(params[:search])
+    end
+    json_response(@spots)
+  end
+
   def create
-    @spot = Spot.new(spot_params)
-
-    if @spot.save
-      render json: @spot, status: :created, location: @spot
-    else
-      render json: @spot.errors, status: :unprocessable_entity
-    end
+    @spot = Spot.create!(spot_params)
+    json_response(@spot, :created)
   end
 
-  # PATCH/PUT /spots/1
   def update
-    if @spot.update(spot_params)
-      render json: @spot
-    else
-      render json: @spot.errors, status: :unprocessable_entity
+    @spot = Spot.find(params[:id])
+    if @spot.update!(spot_params)
+      render status: 200, json: {
+        message: "This spot has been updated successfully."
+      }
     end
   end
 
-  # DELETE /spots/1
   def destroy
-    @spot.destroy
+    @spot = Spot.find(params[:id])
+    if @spot.destroy!
+      render status: 200, json: {
+        message: 'This spot has been destoryed.'
+      }
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_spot
-      @spot = Spot.find(params[:id])
-    end
+  def json_response(object, status = :ok)
+    render json: object, status: status
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def spot_params
-      params.fetch(:spot, {})
-    end
+  def spot_params
+    params.permit(:name, :location, :description, :features, :spot_type, :img, :avg_rate)
+  end
 end
