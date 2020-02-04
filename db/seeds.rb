@@ -12,7 +12,8 @@ Review.destroy_all
 15.times do |index|
   spots = []
   spots.push(Spot.create!( name: Faker::Verb.unique.base.capitalize() + " Park",
-    location: Faker::Address.unique.street_address,
+    lat: Faker::Address.latitude,
+    lon: Faker::Address.longitude,
     description: Faker::Space.distance_measurement + " from " +     Faker::Verb.unique.base.capitalize() + " Park",
     features: Faker::Construction.material + " " +   Faker::Appliance.equipment,
     spot_type: Faker::Movies::HitchhikersGuideToTheGalaxy.starship,
@@ -21,6 +22,7 @@ Review.destroy_all
     ))
   spots
 end
+
   # rand (3..15).times do |review|
   #   spots.each do |spot|
   #     Review.create! :title => Faker::Superhero.name,

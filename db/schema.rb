@@ -28,7 +28,8 @@ ActiveRecord::Schema.define(version: 2020_02_03_172053) do
 
   create_table "spots", force: :cascade do |t|
     t.string "name"
-    t.string "location"
+    t.integer "lat"
+    t.integer "lon"
     t.string "description"
     t.string "features"
     t.string "spot_type"
