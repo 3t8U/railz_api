@@ -39,7 +39,7 @@ class SpotsController < ApplicationController
     @spot = Spot.find(params[:id])
     if @spot.destroy!
       render status: 200, json: {
-        message: 'This spot has been destoryed.'
+        message: 'This spot got wrecked.'
       }
     end
   end
@@ -50,6 +50,6 @@ class SpotsController < ApplicationController
   end
 
   def spot_params
-    params.permit(:name, :location, :description, :features, :spot_type, :img, :avg_rate)
+    params.permit(:name, :description, :features, :spot_type, :img, :lat, :lon)
   end
 end
