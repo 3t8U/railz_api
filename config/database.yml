@@ -82,4 +82,4 @@ production:
   <<: *default
   database: railz_api_production
   username: railz_api
-  password: <%= ENV['RAILZ_API_DATABASE_PASSWORD'] %>
+  password: <%= ENV['RAILZ_DATABASE_PASSWORD'] %>

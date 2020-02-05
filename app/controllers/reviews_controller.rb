@@ -39,6 +39,6 @@ class ReviewsController < ApplicationController
     end
 
     def review_params
-      params.permit(:rating, :species, :breed, :sex, :age, :status, :shelter_id)
+      params.permit(:rating, :title, :content, :heat_lvl, :user_id, :spot_id)
     end
   end
